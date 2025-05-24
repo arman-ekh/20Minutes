@@ -2,9 +2,12 @@ package io.github.TwentyMinUtesTillDown.Controllers.GameControllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
@@ -18,11 +21,15 @@ import java.util.List;
 public class PlayerController {
     private Hero player;
     private OrthographicCamera camera;
+    private BitmapFont font ;
+    private GlyphLayout layout ;
 
 
     public PlayerController(Hero player ,OrthographicCamera camera ){
         this.player = player;
         this.camera = camera;
+        font = new BitmapFont();
+        layout = new GlyphLayout();
     }
 
     public void update(){
@@ -40,8 +47,23 @@ public class PlayerController {
             runningAnimation();
         }
         player.update(Gdx.graphics.getDeltaTime());
+        drawAmmoCount();
         handlePlayerInput();
     }
+    private void drawAmmoCount() {
+        int ammo = player.getWeapon().getAmmoLeft();
+        int maxAmmo = player.getWeapon().getMaxAmmo();
+        String ammoText = ammo + " / " + maxAmmo;
+
+        float x = player.getPosX() + 10;
+        float y = player.getPosY() + player.getPlayerSprite().getHeight() + 20;
+
+        font.setColor(Color.WHITE);
+        font.getData().setScale(1.2f);
+        layout.setText(font, ammoText);
+        font.draw(Main.getBatch(), layout, x, y);
+    }
+
 
 
     public void handlePlayerInput() {

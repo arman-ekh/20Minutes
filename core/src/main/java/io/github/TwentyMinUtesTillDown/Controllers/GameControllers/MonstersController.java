@@ -203,12 +203,9 @@ public class MonstersController {
         float heroX = App.getCurrentGame().getHero().getPosX();
 
         for (Monster monster : monsters) {
-            if (monster.getType().equals(MonsterType.TreeMonster)) {
-                continue;
-            }
+            if (monster.getType().equals(MonsterType.TreeMonster)) continue;
 
             Animation<Texture> animation;
-
 
             if (monster instanceof SubNiggut subNiggut && subNiggut.isDashing()) {
                 animation = AssetManager.getSubNiggutDashing();
@@ -222,10 +219,10 @@ public class MonstersController {
 
             Sprite sprite = monster.getMonsterSprite();
 
+
             sprite.setRegion(animation.getKeyFrame(monster.getTime(), true));
 
             float deltaX = monster.getX() - heroX;
-
             if (Math.abs(deltaX) > 5f) {
                 if (deltaX < 0 && sprite.isFlipX()) {
                     sprite.flip(true, false);
@@ -234,10 +231,11 @@ public class MonstersController {
                 }
             }
 
-            monster.setTime(monster.getTime() + Gdx.graphics.getDeltaTime());
-            animation.setPlayMode(Animation.PlayMode.LOOP);
+            float deltaTime = Math.min(Gdx.graphics.getDeltaTime(), 1f / 30f);
+            monster.setTime(monster.getTime() + deltaTime);
         }
     }
+
 
     public void deadAnimation(Monster monster){
         Animation<Texture> animation = AssetManager.getDeadMonster();

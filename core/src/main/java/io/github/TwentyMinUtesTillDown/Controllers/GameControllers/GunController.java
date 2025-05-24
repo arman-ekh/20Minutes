@@ -2,6 +2,8 @@ package io.github.TwentyMinUtesTillDown.Controllers.GameControllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -22,13 +24,45 @@ public class GunController {
     private Weapon weapon;
     private ArrayList<Bullet> bullets = new ArrayList<>();
 
+    private boolean isReloading = false;
+    private float reloadTimer = 0f;
+    private float reloadDuration = 1.5f;
+    private float reloadStateTime = 0f;
+    private Animation<Texture> reloadAnimation;
+
     public GunController(Weapon weapon) {
         this.weapon = weapon;
+        weapon.setAmmoLeft(weapon.getMaxAmmo());
+        this.reloadDuration = weapon.getType().getReloadTime();
+        this.reloadAnimation = weapon.getType().getReloadAnimation();
     }
-    public void update(Camera camera){
-        weapon.getWeaponSprite().draw(Main.getBatch());
+
+
+    public void update(Camera camera) {
+        if (isReloading) {
+            reloadTimer += Gdx.graphics.getDeltaTime();
+            reloadStateTime += Gdx.graphics.getDeltaTime();
+
+            Texture currentFrame = reloadAnimation.getKeyFrame(reloadStateTime, false);
+            Main.getBatch().draw(currentFrame,
+                weapon.getWeaponSprite().getX(),
+                weapon.getWeaponSprite().getY(),
+                weapon.getWeaponSprite().getWidth(),
+                weapon.getWeaponSprite().getHeight());
+
+            if (reloadTimer >= reloadDuration) {
+                isReloading = false;
+                reloadTimer = 0f;
+                reloadStateTime = 0f;
+                weapon.setAmmoLeft(weapon.getMaxAmmo());
+            }
+        } else {
+            weapon.getWeaponSprite().draw(Main.getBatch());
+        }
+
         updateBullets(camera);
     }
+
     public void handleWeaponRotation(int x, int y) {
         Sprite weaponSprite = weapon.getWeaponSprite();
 
@@ -42,6 +76,10 @@ public class GunController {
 
     public void handleWeaponShoot(int x, int y) {
         Hero hero = App.getCurrentGame().getHero();
+        if (isReloading || weapon.getAmmoLeft() <= 0) {
+            if (!isReloading) startReload();
+            return;
+        }
 
         float centerX = (float) Gdx.graphics.getWidth() / 2;
         float centerY = (float) Gdx.graphics.getHeight() / 2;
@@ -71,6 +109,9 @@ public class GunController {
         }
 
         weapon.setAmmoLeft(weapon.getAmmoLeft() - 1);
+        if (weapon.getAmmoLeft() <= 0) {
+            startReload();
+        }
     }
 
 
@@ -127,7 +168,11 @@ public class GunController {
             }
         }
     }
-
+    private void startReload() {
+        isReloading = true;
+        reloadTimer = 0f;
+        reloadStateTime = 0f;
+    }
 
 
 

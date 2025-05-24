@@ -18,6 +18,46 @@ public class AssetManager {
 
     private static final String bullet = "Sprite/Icon/Icon_FireStarter.png";
 
+    private static final String revolerReoload0 = "Sprite/RevolverReload/RevolverReload_0.png";
+    private static final String revolerReoload1 = "Sprite/RevolverReload/RevolverReload_1.png";
+    private static final String revolerReoload2 = "Sprite/RevolverReload/RevolverReload_2.png";
+    private static final String revolverReload3 = "Sprite/RevolverReload/RevolverReload_3.png";
+
+    private static final Texture revolverReload_tex0 = new Texture(revolerReoload0);
+    private static final Texture revolverReload_tex1 = new Texture(revolerReoload1);
+    private static final Texture revolverReload_tex2 = new Texture(revolerReoload2);
+    private static final Texture revolverReload_tex3 = new Texture(revolverReload3);
+
+    private static final Animation<Texture> revolverReload = new Animation<>(0.5f , revolverReload_tex0,
+        revolverReload_tex1 , revolverReload_tex2 , revolverReload_tex3);
+
+    private static final String shotGunReload0 = "Sprite/GrenadeLauncherReload/GrenadeLauncherReload_0.png";
+    private static final String shotGunReload1 = "Sprite/GrenadeLauncherReload/GrenadeLauncherReload_1.png";
+    private static final String shotGunReload2 = "Sprite/GrenadeLauncherReload/GrenadeLauncherReload_2.png";
+
+    private static final Texture shotGunReloaad0_tex = new Texture(shotGunReload0);
+    private static final Texture shotGunReloaad1_tex = new Texture(shotGunReload1);
+    private static final Texture shotGunReloaad2_tex = new Texture(shotGunReload2);
+
+    private static final Animation<Texture> shotGunReload = new Animation<>(0.3f , shotGunReloaad0_tex
+        ,shotGunReloaad1_tex , shotGunReloaad2_tex );
+
+
+    private static final String smgReload0 = "Sprite/SMGReload/SMGReload_0.png";
+    private static final String smgReload1 = "Sprite/SMGReload/SMGReload_1.png";
+    private static final String smgReload2 = "Sprite/SMGReload/SMGReload_2.png";
+    private static final String smgReload3 = "Sprite/SMGReload/SMGReload_3.png";
+
+
+    private static final Texture smgReload0_tex = new Texture(smgReload0);
+    private static final Texture smgReload1_tex = new Texture(smgReload1);
+    private static final Texture smgReload2_tex = new Texture(smgReload2);
+    private static final Texture smgReload3_tex = new Texture(smgReload3);
+
+
+    private static final Animation<Texture> smgReload = new Animation<>(0.25f , smgReload0_tex ,
+        smgReload1_tex , smgReload2_tex , smgReload3_tex);
+
     private static String character0_idle0 = "Sprite/Idle/Idle_0.png";
     private static final String character0_idle1 = "Sprite/Idle/Idle_1 #8354.png";
     private static final String character0_idle2 = "Sprite/Idle/Idle_2 #8813.png";
@@ -434,5 +474,17 @@ public class AssetManager {
 
     public static Texture getShotGun_tex() {
         return shotGun_tex;
+    }
+
+    public static Animation<Texture> getShotGunReload(){
+        return shotGunReload;
+    }
+
+    public static Animation<Texture> getRevolverReload(){
+        return revolverReload;
+    }
+
+    public static Animation<Texture> getSmgReload(){
+        return smgReload;
     }
 }
