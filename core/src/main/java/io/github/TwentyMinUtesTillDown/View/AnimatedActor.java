@@ -13,6 +13,10 @@ public class AnimatedActor extends Actor {
         this.animation = animation;
         setSize(96, 128);
     }
+    public AnimatedActor(Animation<Texture> animation,int width , int height) {
+        this.animation = animation;
+        setSize(width, height);
+    }
 
     @Override
     public void act(float delta) {

@@ -3,12 +3,32 @@ package io.github.TwentyMinUtesTillDown.Models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AssetManager {
     private  static Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private static final String smg = "Sprite/SMGStill/SMGStill.png";
     private static final Texture smgTexture = new Texture(smg);
+
+
+    private static final String blinkingEye0 = "Sprite/T/T_EyeBlink_0.png";
+    private static final String blinkingEye2 = "Sprite/T/T_EyeBlink_2.png";
+    private static final String blinkingEye1 = "Sprite/T/T_EyeBlink_1.png";
+
+    private static final Texture blinkingEye0_tex = new Texture(blinkingEye0);
+    private static final Texture blinkingEye1_tex = new Texture(blinkingEye1);
+    private static final Texture blinkingEye2_tex = new Texture(blinkingEye2);
+
+    private static final Animation<Texture> blinkingEye = new Animation<>(1.5f,
+        blinkingEye0_tex,
+        blinkingEye1_tex,
+        blinkingEye2_tex,
+        blinkingEye1_tex,
+        blinkingEye0_tex
+    );
+
+
 
     private static String revolver = "Sprite/RevolverStill/RevolverStill.png";
     private static Texture revolver_tex = new Texture(revolver);
@@ -486,5 +506,17 @@ public class AssetManager {
 
     public static Animation<Texture> getSmgReload(){
         return smgReload;
+    }
+    public static Animation<Texture> getBlinkingEye(){
+        return blinkingEye;
+    }
+    private static BitmapFont font;
+
+    public static void load() {
+        font = new BitmapFont(Gdx.files.internal("skin/bitmap_font.fnt"));
+    }
+
+    public static BitmapFont getFont() {
+        return font;
     }
 }

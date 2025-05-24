@@ -1,6 +1,7 @@
 package io.github.TwentyMinUtesTillDown.Controllers.GameControllers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -39,6 +40,10 @@ public class GunController {
 
 
     public void update(Camera camera) {
+        reloadDuration = weapon.getType().getReloadTime();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && !isReloading && weapon.getAmmoLeft() < weapon.getMaxAmmo()) {
+            startReload();
+        }
         if (isReloading) {
             reloadTimer += Gdx.graphics.getDeltaTime();
             reloadStateTime += Gdx.graphics.getDeltaTime();

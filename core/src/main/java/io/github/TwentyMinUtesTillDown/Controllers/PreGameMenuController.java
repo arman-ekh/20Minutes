@@ -12,16 +12,34 @@ public class PreGameMenuController{
     public void onBookmarkClicked(int index) {
         switch (index) {
             case 5:
+                App.setCurrentUserId(0);
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController()));
                 break;
             case 0:{
                 //Load Game
-               App.setCurrentGameId(App.getCurrentuser().getGameId());
-                Main.getMain().setScreen(new GameView(new GameController()));
+
+
+                if(Main.getCurrentGameView() != null){
+                    Main.getMain().setScreen(Main.getCurrentGameView());
+                    break;
+                }
+                if(App.getCurrentuser() == null){
+                    Main.getMain().setScreen(new NewGameView(new NewGameController()));
+                    break;
+                }
+                if(App.getCurrentuser().getGameId() != 0){
+                    App.setCurrentGameId(App.getCurrentuser().getGameId());
+                    Main.getMain().setScreen(new GameView(new GameController()));
+                    break;
+                }
+                Main.getMain().setScreen(new NewGameView(new NewGameController()));
                 break;
             } case 1:{
                 //New Game
                 Main.getMain().setScreen(new NewGameView(new NewGameController()));
+                break;
+            } case 2:{
+
                 break;
             }
 

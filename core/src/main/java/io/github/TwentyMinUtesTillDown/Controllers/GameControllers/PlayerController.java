@@ -162,4 +162,7 @@ public class PlayerController {
     public void setHero(Hero player) {
         this.player = player;
     }
+    public boolean playerIsDead(){
+        return player.getPlayerHealth() <= 0;
+    }
 }

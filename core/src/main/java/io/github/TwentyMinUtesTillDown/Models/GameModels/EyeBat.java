@@ -100,7 +100,7 @@ public class EyeBat extends Monster{
 
         attackTime = 0f;
 
-        return new Bullet(10, monsterX, monsterY, direction);
+        return new Bullet((int) MonsterType.EyeBat.getDamage(), monsterX, monsterY, direction);
     }
 
 

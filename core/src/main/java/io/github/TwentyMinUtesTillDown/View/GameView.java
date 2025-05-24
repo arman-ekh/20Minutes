@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import io.github.TwentyMinUtesTillDown.Controllers.EndGameController;
 import io.github.TwentyMinUtesTillDown.Controllers.GameController;
+import io.github.TwentyMinUtesTillDown.Controllers.PauseController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
@@ -46,6 +48,7 @@ public class GameView implements Screen, InputProcessor {
         controller.setView(this,App.getCurrentGame().getHero());
         levelUpStage = new Stage(new ScreenViewport());
         createLevelUpMenu();
+        Main.setCurrentGameView(this);
     }
 
 
@@ -116,7 +119,9 @@ public class GameView implements Screen, InputProcessor {
         }
         Main.getBatch().end();
 
-
+        if(controller.gameIsOver().isSuccessful()){
+            Main.getMain().setScreen(new EndGameView(new EndGameController()));
+        }
     }
 
     @Override
@@ -148,6 +153,9 @@ public class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.SPACE) {
             controller.setAiming(true);
             return true;
+        } else if (keycode == Input.Keys.ESCAPE) {
+            Main.setCurrentGameView(this);
+            Main.getMain().setScreen(new PauseView(new PauseController()));
         }
         return false;
     }

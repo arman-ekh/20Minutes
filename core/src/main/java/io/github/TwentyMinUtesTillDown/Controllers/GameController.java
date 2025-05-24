@@ -14,6 +14,7 @@ import io.github.TwentyMinUtesTillDown.Models.Enums.LevelUpType;
 import io.github.TwentyMinUtesTillDown.Models.Game;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Hero;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Monster;
+import io.github.TwentyMinUtesTillDown.Models.Result;
 import io.github.TwentyMinUtesTillDown.View.GameView;
 
 import java.util.List;
@@ -175,6 +176,15 @@ public class GameController {
         if (view != null) {
             view.hideLevelUpMenu();
         }
+    }
+
+    public Result gameIsOver(){
+        boolean gameOver = playerController.playerIsDead();
+        boolean gameWon = game.getSecond() >= game.getFullTime();
+        if(gameOver || gameWon ){
+            return new Result(true ,"");
+        }
+        return new Result(false , "");
     }
 
 

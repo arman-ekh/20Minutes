@@ -25,6 +25,7 @@ public class Hero {
     private int xp , lvl;
     private int cheatExistedFor;
     private boolean speedCheat;
+    private int killCount;
 
     public Hero(HeroType type , GunType gunType) {
         this.type = type;
@@ -44,7 +45,7 @@ public class Hero {
     }
 
     private float invincibleTime = 0f;
-    private static final float INVINCIBLE_DURATION = 1f;
+    private static final float INVINCIBLE_DURATION = 2f;
 
     public void update(float delta) {
         if (invincibleTime > 0) {
@@ -202,5 +203,13 @@ public class Hero {
 
     public Texture getPlayerTexture() {
         return playerTexture;
+    }
+
+    public int getKillCount() {
+        return killCount;
+    }
+
+    public void setKillCount(int killCount) {
+        this.killCount = killCount;
     }
 }

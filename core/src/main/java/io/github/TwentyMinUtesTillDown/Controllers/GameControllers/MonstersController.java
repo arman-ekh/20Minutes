@@ -134,6 +134,7 @@ public class MonstersController {
 
 
         App.getCurrentGame().getMonsters().removeAll(deadMonsters);
+        hero.setKillCount(hero.getKillCount() + deadMonsters.size());
 
         if (barrier != null && barrier.isActive()) {
             barrier.update(Gdx.graphics.getDeltaTime());

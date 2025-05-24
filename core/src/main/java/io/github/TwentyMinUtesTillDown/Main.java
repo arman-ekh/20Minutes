@@ -5,11 +5,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.TwentyMinUtesTillDown.Controllers.MainMenuController;
 import io.github.TwentyMinUtesTillDown.Models.App;
+import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.View.GameView;
 import io.github.TwentyMinUtesTillDown.View.MainMenuView;
 
 
@@ -19,6 +22,16 @@ public class Main extends Game {
 
     private static ShapeRenderer shapeRenderer;
     public static ShapeRenderer getShapeRenderer() { return shapeRenderer; }
+    private static GameView currentGameView;
+
+    public static void setCurrentGameView(GameView view) {
+        currentGameView = view;
+    }
+
+    public static GameView getCurrentGameView() {
+        return currentGameView;
+    }
+
 
     @Override
     public void create() {
@@ -26,6 +39,7 @@ public class Main extends Game {
         App.loadApp();
         main = this;
         batch = new SpriteBatch();
+        AssetManager.load();
         main.setScreen(new MainMenuView(new MainMenuController()));
     }
 
@@ -46,5 +60,8 @@ public class Main extends Game {
 
     public static Main getMain() {
         return main;
+    }
+    public static BitmapFont getFont() {
+        return AssetManager.getFont();
     }
 }

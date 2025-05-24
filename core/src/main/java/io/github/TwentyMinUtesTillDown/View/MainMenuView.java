@@ -50,7 +50,6 @@ public class MainMenuView implements Screen {
         table.add(registerButton);
         table.row().pad(10, 0, 10, 0);
         stage.addActor(table);
-
     }
 
     @Override

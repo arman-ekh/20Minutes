@@ -1,7 +1,9 @@
 package io.github.TwentyMinUtesTillDown.Controllers;
 
 import io.github.TwentyMinUtesTillDown.Main;
+import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.Result;
+import io.github.TwentyMinUtesTillDown.Models.User;
 import io.github.TwentyMinUtesTillDown.View.MainMenuView;
 import io.github.TwentyMinUtesTillDown.View.PreGameMenuView;
 
