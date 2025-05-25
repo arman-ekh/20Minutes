@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 import io.github.TwentyMinUtesTillDown.Models.Enums.GunType;
 import io.github.TwentyMinUtesTillDown.Models.Enums.HeroType;
@@ -89,6 +90,7 @@ public class Hero {
     }
 
     public void setLvl(int lvl) {
+        App.playSound(AssetManager.getLevelUpSound());
         this.lvl = lvl;
     }
 
@@ -102,6 +104,7 @@ public class Hero {
 
     public void takeDamage(float damage) {
         if (invincibleTime <= 0) {
+            App.playSound(AssetManager.getDamageSound());
             setPlayerHealth(getPlayerHealth() - damage);
             invincibleTime = INVINCIBLE_DURATION;
             isDamaged = true;

@@ -2,6 +2,7 @@ package io.github.TwentyMinUtesTillDown.Models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.Gson;
@@ -22,6 +23,25 @@ public class App {
     public static KeyBindings keyBindings= new KeyBindings();
     private static boolean greyGame = false;
     private static Music music = AssetManager.getChillMusic();
+    private static boolean sfxEnabled = true;
+    private static boolean autoReload = true;
+
+    public static boolean isAutoReload() {
+        return autoReload;
+    }
+
+    public static void setAutoReload(boolean autoReload) {
+        App.autoReload = autoReload;
+    }
+
+    public static void setSfxEnabled(boolean enabled) {
+        sfxEnabled = enabled;
+    }
+
+    public static boolean isSfxEnabled() {
+        return sfxEnabled;
+    }
+
 
 
     public static void playMusic() {
@@ -43,18 +63,19 @@ public class App {
         }
     }
 
+    public static void setMusic(Music newMusic) {
+        if (music != null && music.isPlaying()) music.stop();
+        music = newMusic;
+        music.setLooping(true);
+        music.play();
+    }
+
     public static void setVolume(float volume) {
-        if (music != null) {
-            music.setVolume(Math.max(0, Math.min(volume, 1)));
-        }
+        if (music != null) music.setVolume(Math.max(0, Math.min(1, volume)));
     }
 
     public static float getVolume() {
         return music != null ? music.getVolume() : 0;
-    }
-
-    public static void setMusic(Music music) {
-        App.music = music;
     }
 
     public static List<User> getUserList() {
@@ -189,4 +210,10 @@ public class App {
     public static void setGreyGame(boolean greyGame) {
         App.greyGame = greyGame;
     }
+    public static void playSound(Sound sound) {
+        if (sfxEnabled) {
+            sound.play(music.getVolume());
+        }
+    }
+
 }

@@ -2,12 +2,14 @@ package io.github.TwentyMinUtesTillDown.Controllers.GameControllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.math.MathUtils;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
@@ -24,6 +26,9 @@ public class PlayerController {
 
     private BitmapFont font ;
     private GlyphLayout layout ;
+    private float footstepTimer = 0f;
+    private final float FOOTSTEP_INTERVAL = 0.3f;
+
 
 
     public PlayerController(Hero player ,OrthographicCamera camera ){
@@ -47,9 +52,24 @@ public class PlayerController {
         if(player.isPlayerRunning()){
             runningAnimation();
         }
+        if (player.isPlayerRunning()) {
+            footstepTimer += Gdx.graphics.getDeltaTime();
+            if (footstepTimer >= FOOTSTEP_INTERVAL) {
+                footstepTimer = 0;
+                playFootstepSound();
+            }
+        }
+
         player.update(Gdx.graphics.getDeltaTime());
         drawAmmoCount();
         handlePlayerInput();
+    }
+    private void playFootstepSound() {
+        if (!App.isSfxEnabled()) return;
+
+        Sound[] footstepSounds = AssetManager.getFootstepSounds();
+        int index = MathUtils.random(footstepSounds.length - 1);
+        footstepSounds[index].play(App.getVolume());
     }
     private void drawAmmoCount() {
         int ammo = player.getWeapon().getAmmoLeft();
@@ -143,6 +163,7 @@ public class PlayerController {
         animation.setPlayMode(Animation.PlayMode.LOOP);
     }
     public void runningAnimation(){
+
         Animation<Texture> animation = player.getType().getRunning();
 
         player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));

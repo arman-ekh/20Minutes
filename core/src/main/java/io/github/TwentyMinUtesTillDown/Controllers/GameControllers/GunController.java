@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
+import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 import io.github.TwentyMinUtesTillDown.Models.Enums.MonsterType;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Bullet;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Hero;
@@ -42,6 +43,7 @@ public class GunController {
     public void update(Camera camera) {
         reloadDuration = weapon.getType().getReloadTime();
         if (Gdx.input.isKeyJustPressed(App.keyBindings.getReload()) && !isReloading && weapon.getAmmoLeft() < weapon.getMaxAmmo()) {
+            App.playSound(AssetManager.getReloadSound());
             startReload();
         }
         if (isReloading) {
@@ -81,7 +83,11 @@ public class GunController {
 
     public void handleWeaponShoot(int x, int y) {
         Hero hero = App.getCurrentGame().getHero();
-        if (isReloading || weapon.getAmmoLeft() <= 0) {
+
+        if (isReloading || (weapon.getAmmoLeft() <= 0 )) {
+            if(!App.isAutoReload()){
+                return;
+            }
             if (!isReloading) startReload();
             return;
         }
@@ -100,7 +106,7 @@ public class GunController {
             Vector2 bulletDirection;
 
             if (numProjectiles == 1) {
-                bulletDirection = new Vector2(baseDirection); 
+                bulletDirection = new Vector2(baseDirection);
             } else {
                 float angleStep = spreadAngle / (numProjectiles - 1);
                 float startAngle = -spreadAngle / 2f;
@@ -116,9 +122,9 @@ public class GunController {
             );
             bullets.add(bullet);
         }
-
+        App.playSound(AssetManager.getShootSound());
         weapon.setAmmoLeft(weapon.getAmmoLeft() - 1);
-        if (weapon.getAmmoLeft() <= 0) {
+        if (weapon.getAmmoLeft() <= 0 && App.isAutoReload()) {
             startReload();
         }
     }

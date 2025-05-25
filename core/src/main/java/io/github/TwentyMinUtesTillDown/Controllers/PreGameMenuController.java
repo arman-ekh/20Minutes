@@ -46,12 +46,19 @@ public class PreGameMenuController{
                 Main.getMain().setScreen(new ScoreBoardView(new ScoreBoardController()));
                 break;
             } case 3:{
+                //hint menu
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new HintMenuView(new HintMenuController()));
                 break;
             } case 4:{
+                //profile
                 Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController()));
+                break;
+            } case 5:{
+                //Setting
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new SettingMenuView(new SettingMenuController()));
                 break;
             }
             case 6:

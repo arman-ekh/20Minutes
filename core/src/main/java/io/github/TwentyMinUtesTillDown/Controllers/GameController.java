@@ -141,13 +141,11 @@ public class GameController {
         if (closest != null) {
             Sprite monsterSprite = closest.getMonsterSprite();
 
-            // استفاده از موقعیت Sprite برای مرکز هیولا
             float centerX = monsterSprite.getX() + monsterSprite.getWidth() / 2f;
             float centerY = monsterSprite.getY() + monsterSprite.getHeight() / 2f;
 
             Vector3 monsterPos3 = new Vector3(centerX, centerY, 0);
 
-            // تبدیل موقعیت جهانی به صفحه
             camera.project(monsterPos3);
 
             int screenX = (int) monsterPos3.x;

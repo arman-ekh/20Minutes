@@ -2,6 +2,7 @@ package io.github.TwentyMinUtesTillDown.Models;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -12,6 +13,44 @@ public class AssetManager {
     private  static Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private static final String smg = "Sprite/SMGStill/SMGStill.png";
     private static final Texture smgTexture = new Texture(smg);
+
+    private static final String shoot = "Sounds/single_shot.wav";
+    private static final Sound shootSound = Gdx.audio.newSound(Gdx.files.internal(shoot));
+
+    public static Sound getShootSound(){
+        return shootSound;
+    }
+
+    private static final String damage= "Sounds/Explosion_Blood_01.wav";
+    private static final String lvlUp = "Sounds/Special&Powerup(8).wav";
+    private static final String reload = "Sounds/Weapon_Shotgun_Reload.wav";
+    private static final Sound damageSound = Gdx.audio.newSound(Gdx.files.internal(damage));
+    private static final Sound levelUpSound = Gdx.audio.newSound(Gdx.files.internal(lvlUp));
+    private static final Sound reloadSound = Gdx.audio.newSound(Gdx.files.internal(reload));
+    public static Sound getDamageSound() {
+        return damageSound;
+    }
+    private static final Sound[] footstepSounds = new Sound[] {
+        Gdx.audio.newSound(Gdx.files.internal("Sounds/Footsteps_Casual_Grass_01.wav")),
+        Gdx.audio.newSound(Gdx.files.internal("Sounds/Footsteps_Casual_Grass_02.wav")),
+        Gdx.audio.newSound(Gdx.files.internal("Sounds/Footsteps_Casual_Grass_03.wav"))
+    };
+
+    public static Sound[] getFootstepSounds(){
+        return footstepSounds;
+    }
+
+
+
+    public static Sound getLevelUpSound() {
+        return levelUpSound;
+    }
+
+    public static Sound getReloadSound() {
+        return reloadSound;
+    }
+
+
 
     private static final String chillMusicPath = "02ConcerningHobbits.mp3";
     private static final String warSongPath = "the_lord_of_the_rings_opening_theme.mp3";
