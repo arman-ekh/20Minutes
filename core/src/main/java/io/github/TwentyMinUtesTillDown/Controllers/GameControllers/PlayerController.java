@@ -21,6 +21,7 @@ import java.util.List;
 public class PlayerController {
     private Hero player;
     private OrthographicCamera camera;
+
     private BitmapFont font ;
     private GlyphLayout layout ;
 

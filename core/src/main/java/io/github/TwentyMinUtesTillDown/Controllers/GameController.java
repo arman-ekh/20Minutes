@@ -36,6 +36,8 @@ public class GameController {
     private final float SHOOT_INTERVAL = 0.1f;
     private boolean isAiming = false;
     private boolean isLevelUpMenuActive = false;
+    private int second;
+    private float accumulatedTime = 0f;
 
 
 
@@ -52,6 +54,7 @@ public class GameController {
         game = App.getCurrentGame();
         frameCounter = 0;
         weaponController = new GunController(game.getHero().getWeapon());
+        second =0;
     }
 
     public boolean isLevelUpMenuActive() {
@@ -70,6 +73,7 @@ public class GameController {
         this.camera = camera;
     }
 
+
     public void updateGame() {
         if (view != null) {
             float delta = Gdx.graphics.getDeltaTime();
@@ -79,7 +83,6 @@ public class GameController {
             }
 
             if (game.isLvlingUp()) {
-
                 isLevelUpMenuActive = true;
                 game.setLvlingUp(false);
                 view.showLevelUpMenu();
@@ -102,12 +105,13 @@ public class GameController {
                 shootTimer = 0f;
             }
 
-            frameCounter++;
-            if(frameCounter == 60){
-                game.setSecond(game.getSecond()+1);
-                frameCounter=0;
+            accumulatedTime += delta;
+            while (accumulatedTime >= 1f) {
+                game.setSecond(game.getSecond() + 1);
                 everySecondCycle(camera);
+                accumulatedTime -= 1f;
             }
+
             if (isAiming) {
                 aimAndShootAtNearestMonster();
             }
@@ -176,6 +180,7 @@ public class GameController {
         if (view != null) {
             view.hideLevelUpMenu();
         }
+        game.getHero().setPlayerHealth(game.getHero().getPlayerHealth() + 1);
     }
 
     public Result gameIsOver(){

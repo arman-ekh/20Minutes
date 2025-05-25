@@ -26,6 +26,7 @@ public class Hero {
     private int cheatExistedFor;
     private boolean speedCheat;
     private int killCount;
+    private int nextKillAmountNeededForHealth;
 
     public Hero(HeroType type , GunType gunType) {
         this.type = type;
@@ -33,7 +34,6 @@ public class Hero {
         playerTexture = type.getTexture();
         this.playerHealth = type.getHealth();
         this.speed = type.getSpeed();
-
         posX = 0;
         posY = 0;
         playerSprite = new Sprite(playerTexture);
@@ -42,6 +42,7 @@ public class Hero {
         rect = new CollisionRect(posX, posY, playerSprite.getWidth(), playerSprite.getHeight());
         weapon = new Weapon(gunType);
         isDamaged = false;
+        maxPlayerHealth = type.getHealth();
     }
 
     private float invincibleTime = 0f;
@@ -118,6 +119,9 @@ public class Hero {
         float oldHealth = this.playerHealth;
         if(playerHealth < oldHealth){
             isDamaged = true;
+        }
+        if(playerHealth > maxPlayerHealth){
+            return;
         }
         this.playerHealth = playerHealth;
     }

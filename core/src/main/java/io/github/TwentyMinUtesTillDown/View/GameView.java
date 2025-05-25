@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.TwentyMinUtesTillDown.Controllers.EndGameController;
 import io.github.TwentyMinUtesTillDown.Controllers.GameController;
+import io.github.TwentyMinUtesTillDown.Controllers.GameControllers.HudController;
 import io.github.TwentyMinUtesTillDown.Controllers.PauseController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
@@ -30,7 +31,9 @@ import java.util.List;
 public class GameView implements Screen, InputProcessor {
     private Stage stage;
     private GameController controller;
+    private HudController hudController;
     private OrthographicCamera camera;
+    private OrthographicCamera hudCamera;
     private Stage levelUpStage;
     private boolean isLevelUpMenuVisible = false;
 
@@ -49,6 +52,9 @@ public class GameView implements Screen, InputProcessor {
         levelUpStage = new Stage(new ScreenViewport());
         createLevelUpMenu();
         Main.setCurrentGameView(this);
+        hudCamera = new OrthographicCamera();
+        hudCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        hudController = new HudController();
     }
 
 
@@ -107,9 +113,17 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+
+        Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
         controller.updateGame();
-        Main.getBatch().setProjectionMatrix(camera.combined);
+        Main.getBatch().end();
+
+        Main.getBatch().setProjectionMatrix(hudCamera.combined);
+        Main.getBatch().begin();
+        hudController.updateHud();
+        Main.getBatch().end();
+
         if (isLevelUpMenuVisible) {
             levelUpStage.act(delta);
             levelUpStage.draw();
@@ -117,12 +131,12 @@ public class GameView implements Screen, InputProcessor {
             stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
             stage.draw();
         }
-        Main.getBatch().end();
 
-        if(controller.gameIsOver().isSuccessful()){
+        if(controller.gameIsOver().isSuccessful()) {
             Main.getMain().setScreen(new EndGameView(new EndGameController()));
         }
     }
+
 
     @Override
     public void resize(int width, int height) {

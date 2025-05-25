@@ -28,6 +28,18 @@ public class AssetManager {
         blinkingEye0_tex
     );
 
+    private static final String proggresBar = "assets/Sprite/T/T_ReloadBar_0.png";
+    private static final String proggresBarSlider = "assets/Sprite/T/T_ReloadBar_1.png";
+
+    private static final Texture proggresBar_tex = new Texture(proggresBar);
+    private static final Texture proggresBarSlide_tex = new Texture(proggresBarSlider);
+
+    public static Texture getProggresBar_tex(){
+        return proggresBar_tex;
+    }
+    public static Texture getProggresBarSlide_tex(){
+        return proggresBarSlide_tex;
+    }
 
 
     private static String revolver = "Sprite/RevolverStill/RevolverStill.png";
