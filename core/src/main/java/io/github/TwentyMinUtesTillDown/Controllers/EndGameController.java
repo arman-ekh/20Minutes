@@ -7,12 +7,14 @@ import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Hero;
+import io.github.TwentyMinUtesTillDown.Models.User;
 import io.github.TwentyMinUtesTillDown.View.EndGameView;
 import io.github.TwentyMinUtesTillDown.View.MainMenuView;
 import io.github.TwentyMinUtesTillDown.View.PreGameMenuView;
 
 public class EndGameController {
     private EndGameView view;
+    private boolean userInfoUpToDate = false;
 
 
 
@@ -44,7 +46,15 @@ public class EndGameController {
         int killCount = hero.getKillCount();
         int score = timeSurvived * killCount;
 
-
+        if(!userInfoUpToDate){
+            if(App.getCurrentuser() != null){
+                User user = App.getCurrentuser();
+                user.setTotalScore(user.getTotalScore() + score);
+                user.setTotalKillCount(killCount + user.getTotalKillCount());
+                user.setTotalTimeSurvived(timeSurvived + user.getTotalTimeSurvived());
+                userInfoUpToDate = true;
+            }
+        }
 
         String endMessage;
         if (hero.getPlayerHealth() <= 0) {

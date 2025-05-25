@@ -20,6 +20,7 @@ public class App {
     private static List<User> userList = new ArrayList<>();
     private static List<Game> gameList = new ArrayList<>();
     public static KeyBindings keyBindings= new KeyBindings();
+    private static boolean greyGame = false;
 
     public static List<User> getUserList() {
         return userList;
@@ -144,5 +145,13 @@ public class App {
 
     public static void setCurrentGameId(int currentGameId) {
         App.currentGameId = currentGameId;
+    }
+
+    public static boolean isGreyGame() {
+        return greyGame;
+    }
+
+    public static void setGreyGame(boolean greyGame) {
+        App.greyGame = greyGame;
     }
 }

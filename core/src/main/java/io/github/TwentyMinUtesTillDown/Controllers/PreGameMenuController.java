@@ -1,7 +1,9 @@
 package io.github.TwentyMinUtesTillDown.Controllers;
 
+import com.badlogic.gdx.Gdx;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
+import io.github.TwentyMinUtesTillDown.Models.User;
 import io.github.TwentyMinUtesTillDown.View.*;
 
 public class PreGameMenuController{
@@ -11,13 +13,8 @@ public class PreGameMenuController{
     }
     public void onBookmarkClicked(int index) {
         switch (index) {
-            case 5:
-                App.setCurrentUserId(0);
-                Main.getMain().setScreen(new MainMenuView(new MainMenuController()));
-                break;
             case 0:{
                 //Load Game
-
 
                 if(Main.getCurrentGameView() != null){
                     Main.getMain().setScreen(Main.getCurrentGameView());
@@ -39,13 +36,26 @@ public class PreGameMenuController{
                 Main.getMain().setScreen(new NewGameView(new NewGameController()));
                 break;
             } case 2:{
-
+                //score board
+                Main.getMain().setScreen(new ScoreBoardView(new ScoreBoardController()));
                 break;
-            }
+            } case 6:
+                //log out
+                App.setCurrentUserId(0);
+                App.setCurrentGameId(0);
+                Main.getMain().setScreen(new MainMenuView(new MainMenuController()));
+                break;
+
 
         }
     }
-
+    public void writeInfo(){
+        if(App.getCurrentuser() != null){
+            User user = App.getCurrentuser();
+            Main.getFont().draw(Main.getBatch() ,"User Name: "+user.getName() ,450 , (float) Gdx.graphics.getHeight() /2);
+            Main.getFont().draw(Main.getBatch() , "User Score: "+user.getTotalScore() , 450 ,(float) Gdx.graphics.getHeight() /2 - 100 );
+        }
+    }
 
 
 

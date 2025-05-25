@@ -19,6 +19,27 @@ public class AssetManager {
         return cursorPixmap;
     }
 
+    private static final String fireBallExplosion0 = "Sprite/FireballExplosion/FireballExplosion_0.png";
+    private static final String fireBallExplosion1 = "Sprite/FireballExplosion/FireballExplosion_1.png";
+    private static final String fireBallExplosion2 = "Sprite/FireballExplosion/FireballExplosion_2.png";
+    private static final String fireBallExplosion3 = "Sprite/FireballExplosion/FireballExplosion_3.png";
+    private static final String fireBallExplosion4 = "Sprite/FireballExplosion/FireballExplosion_4.png";
+    private static final String fireBallExplosion5 = "Sprite/FireballExplosion/FireballExplosion_5.png";
+
+
+    private static final Texture fireBallExplosion0_tex = new Texture(fireBallExplosion0);
+    private static final Texture fireBallExplosion1_tex = new Texture(fireBallExplosion1);
+    private static final Texture fireBallExplosion2_tex = new Texture(fireBallExplosion2);
+    private static final Texture fireBallExplosion3_tex = new Texture(fireBallExplosion3);
+    private static final Texture fireBallExplosion4_tex = new Texture(fireBallExplosion4);
+    private static final Texture fireBallExplosion5_tex = new Texture(fireBallExplosion5);
+
+    private static Animation<Texture> fireBallExplosion = new Animation<>(0.1f,fireBallExplosion0_tex
+        ,fireBallExplosion1_tex,fireBallExplosion2_tex,fireBallExplosion3_tex,fireBallExplosion4_tex,fireBallExplosion5_tex );
+
+    public static Animation<Texture> getFireBallExplosion(){
+        return fireBallExplosion;
+    }
 
     private static final String blinkingEye0 = "Sprite/T/T_EyeBlink_0.png";
     private static final String blinkingEye2 = "Sprite/T/T_EyeBlink_2.png";

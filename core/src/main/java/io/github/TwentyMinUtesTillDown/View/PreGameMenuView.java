@@ -42,7 +42,7 @@ public class PreGameMenuView implements Screen {
         table.center();
         table.top().padTop(50);
 
-        String[] labels = {"load game", "new game", "setting", "hint menu", "profile", "logout"};
+        String[] labels = {"load game", "new game", "Score Board", "hint menu", "profile","setting", "logout"};
 
         for (int i = 0; i < labels.length; i++) {
             final int pageIndex = i;
@@ -69,6 +69,7 @@ public class PreGameMenuView implements Screen {
         Main.getBatch().begin();
         stage.act();
         stage.draw();
+        controller.writeInfo();
         Main.getBatch().end();
 
         controller.setView(this);

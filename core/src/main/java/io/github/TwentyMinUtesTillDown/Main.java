@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.TwentyMinUtesTillDown.Controllers.MainMenuController;
@@ -24,6 +25,8 @@ public class Main extends Game {
     private static ShapeRenderer shapeRenderer;
     public static ShapeRenderer getShapeRenderer() { return shapeRenderer; }
     private static GameView currentGameView;
+    private static ShaderProgram grayscaleShader;
+
 
     public static void setCurrentGameView(GameView view) {
         currentGameView = view;
@@ -36,6 +39,7 @@ public class Main extends Game {
 
     @Override
     public void create() {
+
         Pixmap pixmap = AssetManager.getCursorPixmap();
 
         int hotspotX = pixmap.getWidth() / 2;
@@ -49,6 +53,18 @@ public class Main extends Game {
         batch = new SpriteBatch();
         AssetManager.load();
         main.setScreen(new MainMenuView(new MainMenuController()));
+        ShaderProgram.pedantic = false;
+
+
+        grayscaleShader = new ShaderProgram(
+            Gdx.files.internal("shaders/grayscale.vert"),
+            Gdx.files.internal("shaders/grayscale.frag")
+        );
+
+        if (!grayscaleShader.isCompiled()) {
+            Gdx.app.error("Shader", "Shader compile error:\n" + grayscaleShader.getLog());
+            System.exit(0);
+        }
     }
 
     @Override
@@ -59,6 +75,7 @@ public class Main extends Game {
     @Override
     public  void dispose() {
         App.saveApp();
+        batch.setShader(null);
         batch.dispose();
     }
 
@@ -71,5 +88,9 @@ public class Main extends Game {
     }
     public static BitmapFont getFont() {
         return AssetManager.getFont();
+    }
+
+    public static ShaderProgram getGrayscaleShader() {
+        return grayscaleShader;
     }
 }

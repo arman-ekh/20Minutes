@@ -1,6 +1,8 @@
 package io.github.TwentyMinUtesTillDown.Controllers;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
@@ -36,5 +38,15 @@ public class PauseController {
                 Main.getMain().setScreen( new PreGameMenuView(new PreGameMenuController()));
             }
         });
+        view.getGrayGame().addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                boolean isChecked = view.getGrayGame().isChecked();
+                App.setGreyGame(isChecked);
+            }
+        });
+
+
     }
 }
+

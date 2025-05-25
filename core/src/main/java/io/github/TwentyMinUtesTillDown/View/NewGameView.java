@@ -37,7 +37,6 @@ public class NewGameView implements Screen {
 
     private final HeroType[] heroes = HeroType.values();
     private final Animation<Texture>[] idleAnimations = new Animation[heroes.length];
-    private final Image[] animationImages = new Image[heroes.length];
     private final CheckBox[] checkBoxes = new CheckBox[heroes.length];
 
     public NewGameView(NewGameController controller) {

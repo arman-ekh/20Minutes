@@ -2,6 +2,7 @@ package io.github.TwentyMinUtesTillDown.Models.GameModels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 import io.github.TwentyMinUtesTillDown.Models.Enums.GunType;
@@ -27,9 +28,23 @@ public class Hero {
     private boolean speedCheat;
     private int killCount;
     private int nextKillAmountNeededForHealth;
+    private transient Animation<Texture> takeDamageAnimation;
+    private float takeDamageAnimElapsedTime = 0f;
+    private boolean isPlayingTakeDamageAnimation = false;
+
+
+
+    public float getTakeDamageAnimationTime() {
+        return takeDamageAnimElapsedTime;
+    }
+
+    public void setTakeDamageAnimationTime(float takeDamageAnimationTime) {
+        this.takeDamageAnimElapsedTime = takeDamageAnimationTime;
+    }
 
     public Hero(HeroType type , GunType gunType) {
         this.type = type;
+        takeDamageAnimElapsedTime =0f;
         lvl = 1;
         playerTexture = type.getTexture();
         this.playerHealth = type.getHealth();
@@ -55,7 +70,19 @@ public class Hero {
                 invincibleTime = 0;
             }
         }
+
+        if (isPlayingTakeDamageAnimation && takeDamageAnimation != null) {
+            takeDamageAnimElapsedTime += delta;
+            Texture currentFrame = takeDamageAnimation.getKeyFrame(takeDamageAnimElapsedTime, false);
+            playerSprite.setTexture(currentFrame);
+
+            if (takeDamageAnimation.isAnimationFinished(takeDamageAnimElapsedTime)) {
+                isPlayingTakeDamageAnimation = false;
+                playerSprite.setTexture(playerTexture);
+            }
+        }
     }
+
 
     public int getLvl() {
         return lvl;
@@ -78,8 +105,13 @@ public class Hero {
             setPlayerHealth(getPlayerHealth() - damage);
             invincibleTime = INVINCIBLE_DURATION;
             isDamaged = true;
+
+            takeDamageAnimation = AssetManager.getFireBallExplosion();
+            takeDamageAnimElapsedTime = 0f;
+            isPlayingTakeDamageAnimation = true;
         }
     }
+
 
 
     public float getPosX() {

@@ -115,7 +115,9 @@ public class GameView implements Screen, InputProcessor {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-
+        if(App.isGreyGame()){
+            Main.getBatch().setShader(Main.getGrayscaleShader());
+        }
         Main.getBatch().setProjectionMatrix(camera.combined);
         Main.getBatch().begin();
         controller.updateGame();
@@ -125,6 +127,7 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().begin();
         hudController.updateHud();
         Main.getBatch().end();
+        Main.getBatch().setShader(null);
 
         if (isLevelUpMenuVisible) {
             levelUpStage.act(delta);
