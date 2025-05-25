@@ -3,6 +3,7 @@ package io.github.TwentyMinUtesTillDown.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,13 +16,16 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.TwentyMinUtesTillDown.Controllers.PreGameMenuController;
 import io.github.TwentyMinUtesTillDown.Main;
+import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.Models.User;
 
 public class PreGameMenuView implements Screen {
     private Stage stage;
     private Table table;
     private final Skin skin = AssetManager.getSkin();
     private PreGameMenuController controller;
+    private Texture texture;
 
 
 
@@ -30,6 +34,10 @@ public class PreGameMenuView implements Screen {
     public PreGameMenuView(PreGameMenuController controller) {
         this.controller = controller;
         this.stage = new Stage();
+        if(App.getCurrentuser() != null) {
+            User user = App.getCurrentuser();
+            this.texture = user.getPortrait_tex();
+        }
     }
 
 
@@ -69,7 +77,11 @@ public class PreGameMenuView implements Screen {
         Main.getBatch().begin();
         stage.act();
         stage.draw();
+
         controller.writeInfo();
+        if(App.getCurrentuser() != null){
+            Main.getBatch().draw(texture , Gdx.graphics.getWidth()/2-100 , 100 , 200 , 200);
+        }
         Main.getBatch().end();
 
         controller.setView(this);

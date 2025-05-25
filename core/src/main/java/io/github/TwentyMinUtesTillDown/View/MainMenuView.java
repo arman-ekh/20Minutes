@@ -3,6 +3,7 @@ package io.github.TwentyMinUtesTillDown.View;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -13,8 +14,10 @@ import io.github.TwentyMinUtesTillDown.Controllers.MainMenuController;
 import io.github.TwentyMinUtesTillDown.Controllers.PreGameMenuController;
 import io.github.TwentyMinUtesTillDown.Controllers.RegisterMenuController;
 import io.github.TwentyMinUtesTillDown.Main;
+import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 import io.github.TwentyMinUtesTillDown.Models.Result;
+import io.github.TwentyMinUtesTillDown.Models.User;
 
 public class MainMenuView implements Screen {
     private Stage stage;
@@ -50,6 +53,7 @@ public class MainMenuView implements Screen {
         table.add(registerButton);
         table.row().pad(10, 0, 10, 0);
         stage.addActor(table);
+        App.playMusic();
     }
 
     @Override
@@ -73,6 +77,7 @@ public class MainMenuView implements Screen {
         if(resultForLogIn.isSuccessful()){
             Main.getMain().setScreen(new LoginMenuView(new LoginMenuController()));
         }
+
 
     }
 

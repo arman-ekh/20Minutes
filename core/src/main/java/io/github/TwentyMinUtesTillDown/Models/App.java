@@ -1,7 +1,7 @@
 package io.github.TwentyMinUtesTillDown.Models;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.Gson;
@@ -21,6 +21,41 @@ public class App {
     private static List<Game> gameList = new ArrayList<>();
     public static KeyBindings keyBindings= new KeyBindings();
     private static boolean greyGame = false;
+    private static Music music = AssetManager.getChillMusic();
+
+
+    public static void playMusic() {
+        if (music != null && !music.isPlaying()) {
+            music.setLooping(true);
+            music.play();
+        }
+    }
+
+    public static void stopMusic() {
+        if (music != null && music.isPlaying()) {
+            music.stop();
+        }
+    }
+
+    public static void pauseMusic() {
+        if (music != null && music.isPlaying()) {
+            music.pause();
+        }
+    }
+
+    public static void setVolume(float volume) {
+        if (music != null) {
+            music.setVolume(Math.max(0, Math.min(volume, 1)));
+        }
+    }
+
+    public static float getVolume() {
+        return music != null ? music.getVolume() : 0;
+    }
+
+    public static void setMusic(Music music) {
+        App.music = music;
+    }
 
     public static List<User> getUserList() {
         return userList;

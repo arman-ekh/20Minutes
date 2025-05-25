@@ -66,6 +66,15 @@ public class Main extends Game {
             System.exit(0);
         }
     }
+    public void onImageDropped(String filePath) {
+        System.out.println("Dropped image file: " + filePath);
+    }
+    public void setCurrentUserPortrait(String filePath){
+        if(App.getCurrentuser() != null){
+            App.getCurrentuser().setPortraitAddress(filePath);
+        }
+    }
+
 
     @Override
     public void render() {

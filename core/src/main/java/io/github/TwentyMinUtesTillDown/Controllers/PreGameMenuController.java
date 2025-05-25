@@ -17,32 +17,48 @@ public class PreGameMenuController{
                 //Load Game
 
                 if(Main.getCurrentGameView() != null){
+                    Main.getMain().getScreen().dispose();
                     Main.getMain().setScreen(Main.getCurrentGameView());
                     break;
                 }
                 if(App.getCurrentuser() == null){
+                    Main.getMain().getScreen().dispose();
                     Main.getMain().setScreen(new NewGameView(new NewGameController()));
                     break;
                 }
                 if(App.getCurrentuser().getGameId() != 0){
+                    Main.getMain().getScreen().dispose();
                     App.setCurrentGameId(App.getCurrentuser().getGameId());
                     Main.getMain().setScreen(new GameView(new GameController()));
                     break;
                 }
+                Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new NewGameView(new NewGameController()));
                 break;
             } case 1:{
                 //New Game
+                Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new NewGameView(new NewGameController()));
                 break;
             } case 2:{
                 //score board
+                Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new ScoreBoardView(new ScoreBoardController()));
                 break;
-            } case 6:
+            } case 3:{
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new HintMenuView(new HintMenuController()));
+                break;
+            } case 4:{
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new ProfileMenuView(new ProfileMenuController()));
+                break;
+            }
+            case 6:
                 //log out
                 App.setCurrentUserId(0);
                 App.setCurrentGameId(0);
+                Main.getMain().getScreen().dispose();
                 Main.getMain().setScreen(new MainMenuView(new MainMenuController()));
                 break;
 

@@ -2,6 +2,7 @@ package io.github.TwentyMinUtesTillDown.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowAdapter;
 import io.github.TwentyMinUtesTillDown.Main;
 
 /** Launches the desktop (LWJGL3) application. */
@@ -12,8 +13,24 @@ public class Lwjgl3Launcher {
     }
 
     private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new Main(), getDefaultConfiguration());
+        Main mainInstance = new Main();
+        Lwjgl3ApplicationConfiguration config = getDefaultConfiguration();
+
+        config.setWindowListener(new Lwjgl3WindowAdapter() {
+            @Override
+            public void filesDropped(String[] files) {
+                for (String file : files) {
+                    if (file.toLowerCase().endsWith(".png")) {
+                        mainInstance.setCurrentUserPortrait(file);
+                    }
+                }
+            }
+        });
+
+        return new Lwjgl3Application(mainInstance, config);
     }
+
+
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
         Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();

@@ -1,5 +1,8 @@
 package io.github.TwentyMinUtesTillDown.Models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 public class User {
     private String name , password , email;
     private int id ;
@@ -7,6 +10,7 @@ public class User {
     private int totalScore;
     private int totalTimeSurvived;
     private int totalKillCount;
+    private String portraitAddress;
 
     public User(String name, String password, String email) {
         this.name = name;
@@ -16,6 +20,23 @@ public class User {
         this.totalScore = 0;
         this.totalTimeSurvived = 0;
         this.totalKillCount = 0;
+        portraitAddress = getRandomProfile();
+    }
+
+    public String getPortraitAddress() {
+        return portraitAddress;
+    }
+
+    public void setPortraitAddress(String portraitAddress) {
+        this.portraitAddress = portraitAddress;
+    }
+    public Texture getPortrait_tex(){
+       try {
+           return new Texture(Gdx.files.absolute(portraitAddress));
+       }catch (Exception e){
+           this.portraitAddress = getRandomProfile();
+           return new Texture(portraitAddress);
+       }
     }
 
     public int getTotalTimeSurvived() {
@@ -82,5 +103,23 @@ public class User {
     public String toString() {
         String message = "Name: "+name + " Score: "+totalScore + " Kill Count: "+getTotalKillCount() + " Survival Time: "+getTotalTimeSurvived();
         return message;
+    }
+
+    public static String getRandomProfile(){
+        int rand = RandomNumber.getRandom().nextInt(0,3);
+        String profile ;
+        switch (rand){
+            case 0:{
+                profile = AssetManager.getDasherPortrait();
+                break;
+            } case 1:{
+                profile = AssetManager.getDiamondPortrait();
+                break;
+            } default:{
+                profile = AssetManager.getHasturPortrait();
+                break;
+            }
+        }
+        return profile;
     }
 }

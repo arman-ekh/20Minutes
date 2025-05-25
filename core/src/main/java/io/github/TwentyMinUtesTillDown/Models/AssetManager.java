@@ -1,6 +1,7 @@
 package io.github.TwentyMinUtesTillDown.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,6 +12,49 @@ public class AssetManager {
     private  static Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private static final String smg = "Sprite/SMGStill/SMGStill.png";
     private static final Texture smgTexture = new Texture(smg);
+
+    private static final String chillMusicPath = "02ConcerningHobbits.mp3";
+    private static final String warSongPath = "the_lord_of_the_rings_opening_theme.mp3";
+
+    private static final Music chillMusic = Gdx.audio.newMusic(Gdx.files.internal(chillMusicPath));
+    private static final Music warSong = Gdx.audio.newMusic(Gdx.files.internal(warSongPath));
+
+    static {
+        chillMusic.setLooping(true);
+        chillMusic.setVolume(0.5f);
+
+        warSong.setLooping(true);
+        warSong.setVolume(0.5f);
+    }
+    public static Music getChillMusic() {
+        return chillMusic;
+    }
+
+    public static Music getWarSong() {
+        return warSong;
+    }
+
+    private static final String diamondPortrait = "C:\\Users\\PAYAM RAYANE\\Desktop\\Hello world\\20Minutes\\assets\\Sprite\\T\\T_Diamond_Portrait.png";
+
+    public static String getDiamondPortrait(){
+        return diamondPortrait;
+    }
+
+    private static final String dasherPortrait = "C:\\Users\\PAYAM RAYANE\\Desktop\\Hello world\\20Minutes\\assets\\Sprite\\T\\T_Dasher_Portrait.png";
+
+    public static String getDasherPortrait(){
+        return dasherPortrait;
+    }
+
+
+
+    private static final String hasturPortrait = "C:\\Users\\PAYAM RAYANE\\Desktop\\Hello world\\20Minutes\\assets\\Sprite\\T\\T_Hastur_Portrait.png";
+
+    public static String getHasturPortrait(){
+        return hasturPortrait;
+    }
+
+
 
     private static final String cursor = "Sprite/T/T_Cursor.png";
     private static final Pixmap cursorPixmap = new Pixmap(Gdx.files.internal(cursor));
