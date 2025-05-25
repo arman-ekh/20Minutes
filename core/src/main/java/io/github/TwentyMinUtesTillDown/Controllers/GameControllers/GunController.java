@@ -41,7 +41,7 @@ public class GunController {
 
     public void update(Camera camera) {
         reloadDuration = weapon.getType().getReloadTime();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && !isReloading && weapon.getAmmoLeft() < weapon.getMaxAmmo()) {
+        if (Gdx.input.isKeyJustPressed(App.keyBindings.getReload()) && !isReloading && weapon.getAmmoLeft() < weapon.getMaxAmmo()) {
             startReload();
         }
         if (isReloading) {
@@ -95,14 +95,18 @@ public class GunController {
         if (numProjectiles < 1) numProjectiles = 1;
 
         float spreadAngle = 15f;
-        float angleStep = (numProjectiles > 1) ? spreadAngle / (numProjectiles - 1) : 0f;
-        float startAngle = -spreadAngle / 2f;
 
         for (int i = 0; i < numProjectiles; i++) {
-            float angleOffset = startAngle + i * angleStep;
+            Vector2 bulletDirection;
 
-
-            Vector2 bulletDirection = new Vector2(baseDirection).rotateDeg(angleOffset);
+            if (numProjectiles == 1) {
+                bulletDirection = new Vector2(baseDirection); 
+            } else {
+                float angleStep = spreadAngle / (numProjectiles - 1);
+                float startAngle = -spreadAngle / 2f;
+                float angleOffset = startAngle + i * angleStep;
+                bulletDirection = new Vector2(baseDirection).rotateDeg(angleOffset);
+            }
 
             Bullet bullet = new Bullet(
                 weapon.getDamage(),

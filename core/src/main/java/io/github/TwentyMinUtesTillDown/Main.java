@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +36,13 @@ public class Main extends Game {
 
     @Override
     public void create() {
+        Pixmap pixmap = AssetManager.getCursorPixmap();
+
+        int hotspotX = pixmap.getWidth() / 2;
+        int hotspotY = pixmap.getHeight() / 2;
+
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pixmap, hotspotX, hotspotY));
+
         shapeRenderer = new ShapeRenderer();
         App.loadApp();
         main = this;

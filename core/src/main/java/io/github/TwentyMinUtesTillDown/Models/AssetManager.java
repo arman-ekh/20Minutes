@@ -1,6 +1,7 @@
 package io.github.TwentyMinUtesTillDown.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,6 +11,13 @@ public class AssetManager {
     private  static Skin skin = new Skin(Gdx.files.internal("skin/pixthulhu-ui.json"));
     private static final String smg = "Sprite/SMGStill/SMGStill.png";
     private static final Texture smgTexture = new Texture(smg);
+
+    private static final String cursor = "Sprite/T/T_Cursor.png";
+    private static final Pixmap cursorPixmap = new Pixmap(Gdx.files.internal(cursor));
+
+    public static Pixmap getCursorPixmap() {
+        return cursorPixmap;
+    }
 
 
     private static final String blinkingEye0 = "Sprite/T/T_EyeBlink_0.png";

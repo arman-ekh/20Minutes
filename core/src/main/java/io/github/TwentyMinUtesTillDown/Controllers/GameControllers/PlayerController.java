@@ -71,15 +71,15 @@ public class PlayerController {
         float dx = 0;
         float dy = 0;
         player.setPlayerRunning(false);
-        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+        if (Gdx.input.isKeyPressed(App.keyBindings.getMoveUp())) {
             dy += player.getSpeed();
             player.setPlayerRunning(true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+        if (Gdx.input.isKeyPressed(App.keyBindings.getMoveDown())) {
             dy -= player.getSpeed();
             player.setPlayerRunning(true);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+        if (Gdx.input.isKeyPressed(App.keyBindings.getMoveRight())) {
             dx += player.getSpeed();
             player.setPlayerRunning(true);
 
@@ -89,7 +89,7 @@ public class PlayerController {
                 player.setPlayerRunning(true);
             }
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+        if (Gdx.input.isKeyPressed(App.keyBindings.getMoveLeft())) {
             dx -= player.getSpeed();
             player.setPlayerRunning(true);
 

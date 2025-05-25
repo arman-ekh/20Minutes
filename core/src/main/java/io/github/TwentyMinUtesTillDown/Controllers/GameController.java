@@ -3,6 +3,7 @@ package io.github.TwentyMinUtesTillDown.Controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import io.github.TwentyMinUtesTillDown.Controllers.GameControllers.GunController;
@@ -14,6 +15,7 @@ import io.github.TwentyMinUtesTillDown.Models.Enums.LevelUpType;
 import io.github.TwentyMinUtesTillDown.Models.Game;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Hero;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Monster;
+import io.github.TwentyMinUtesTillDown.Models.MouseUtils;
 import io.github.TwentyMinUtesTillDown.Models.Result;
 import io.github.TwentyMinUtesTillDown.View.GameView;
 
@@ -137,19 +139,28 @@ public class GameController {
         }
 
         if (closest != null) {
-            Vector3 monsterPos3 = new Vector3(closest.getX()+32, closest.getY()+32, 0);
+            Sprite monsterSprite = closest.getMonsterSprite();
+
+            // استفاده از موقعیت Sprite برای مرکز هیولا
+            float centerX = monsterSprite.getX() + monsterSprite.getWidth() / 2f;
+            float centerY = monsterSprite.getY() + monsterSprite.getHeight() / 2f;
+
+            Vector3 monsterPos3 = new Vector3(centerX, centerY, 0);
+
+            // تبدیل موقعیت جهانی به صفحه
             camera.project(monsterPos3);
+
             int screenX = (int) monsterPos3.x;
-            int screenY = Gdx.graphics.getHeight() - (int) monsterPos3.y-32;
-
-
+            int screenY = Gdx.graphics.getHeight() - (int) monsterPos3.y;
             weaponController.handleWeaponRotation(screenX, screenY);
 
             if (shootTimer >= SHOOT_INTERVAL) {
+                MouseUtils.moveMouseTo(screenX, screenY);
                 weaponController.handleWeaponShoot(screenX, screenY);
                 shootTimer = 0f;
             }
         }
+
     }
 
 

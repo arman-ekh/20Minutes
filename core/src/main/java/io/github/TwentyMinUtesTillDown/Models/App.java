@@ -1,6 +1,7 @@
 package io.github.TwentyMinUtesTillDown.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.Gson;
@@ -18,12 +19,11 @@ public class App {
     private static int currentGameId;
     private static List<User> userList = new ArrayList<>();
     private static List<Game> gameList = new ArrayList<>();
-
+    public static KeyBindings keyBindings= new KeyBindings();
 
     public static List<User> getUserList() {
         return userList;
     }
-
     public static List<Game> getGameList() {
         return gameList;
     }

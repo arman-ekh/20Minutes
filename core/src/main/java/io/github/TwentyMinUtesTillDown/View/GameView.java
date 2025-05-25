@@ -166,33 +166,33 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.SPACE) {
+        if (keycode == App.keyBindings.getAttack()) {
             controller.setAiming(true);
             return true;
         } else if (keycode == Input.Keys.ESCAPE) {
             Main.setCurrentGameView(this);
             Main.getMain().setScreen(new PauseView(new PauseController()));
-        } else if (keycode == Input.Keys.H) {
+        } else if (keycode == App.keyBindings.getCheatHealth()) {
             if(!cheatActivated){
                 controller.getPlayerController().cheatHealth();
                 cheatActivated = true;
             }
-        } else if (keycode == Input.Keys.B) {
+        } else if (keycode == App.keyBindings.getCheatBossFight()) {
             int halfTime = App.getCurrentGame().getFullTime()/2;
             if(!cheatActivated && !bossFightCheatActivated && App.getCurrentGame().getSecond() < halfTime ){
                 controller.cheatTime(halfTime);
                 cheatActivated = true;
                 bossFightCheatActivated = true;
             }
-        } else if (keycode == Input.Keys.T) {
+        } else if (keycode == App.keyBindings.getCheatTime()) {
             if(!cheatActivated){
                 controller.cheatTime(App.getCurrentGame().getSecond() + 60);
             }
-        } else if (keycode == Input.Keys.Y) {
+        } else if (keycode == App.keyBindings.getCheatLvl()) {
             if(!cheatActivated){
                 controller.getPlayerController().cheatLvl();
             }
-        } else if (keycode == Input.Keys.G) {
+        } else if (keycode == App.keyBindings.getCheatDamage()) {
             if(!cheatActivated){
                 controller.handleLevelUpOption(LevelUpType.DAMAGE);
             }
@@ -202,15 +202,15 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.SPACE) {
+        if (keycode == App.keyBindings.getAttack()) {
             controller.setAiming(false);
             return true;
         } else if (
-            keycode == Input.Keys.H
-            || keycode == Input.Keys.B
-            || keycode == Input.Keys.T
-            || keycode == Input.Keys.Y
-            || keycode == Input.Keys.G
+            keycode == App.keyBindings.getCheatHealth()
+            || keycode == App.keyBindings.getCheatTime()
+            || keycode == App.keyBindings.getCheatDamage()
+            || keycode == App.keyBindings.getCheatLvl()
+            || keycode == App.keyBindings.getCheatBossFight()
         ) {
             cheatActivated = false;
         }
