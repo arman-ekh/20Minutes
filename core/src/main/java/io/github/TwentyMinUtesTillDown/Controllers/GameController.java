@@ -236,4 +236,8 @@ public class GameController {
     public float getSHOOT_INTERVAL() {
         return SHOOT_INTERVAL;
     }
+
+    public void cheatTime(int amount){
+        App.getCurrentGame().setSecond(amount);
+    }
 }

@@ -36,6 +36,8 @@ public class GameView implements Screen, InputProcessor {
     private OrthographicCamera hudCamera;
     private Stage levelUpStage;
     private boolean isLevelUpMenuVisible = false;
+    private boolean cheatActivated=false;
+    private boolean bossFightCheatActivated=false;
 
 
 
@@ -170,6 +172,30 @@ public class GameView implements Screen, InputProcessor {
         } else if (keycode == Input.Keys.ESCAPE) {
             Main.setCurrentGameView(this);
             Main.getMain().setScreen(new PauseView(new PauseController()));
+        } else if (keycode == Input.Keys.H) {
+            if(!cheatActivated){
+                controller.getPlayerController().cheatHealth();
+                cheatActivated = true;
+            }
+        } else if (keycode == Input.Keys.B) {
+            int halfTime = App.getCurrentGame().getFullTime()/2;
+            if(!cheatActivated && !bossFightCheatActivated && App.getCurrentGame().getSecond() < halfTime ){
+                controller.cheatTime(halfTime);
+                cheatActivated = true;
+                bossFightCheatActivated = true;
+            }
+        } else if (keycode == Input.Keys.T) {
+            if(!cheatActivated){
+                controller.cheatTime(App.getCurrentGame().getSecond() + 60);
+            }
+        } else if (keycode == Input.Keys.Y) {
+            if(!cheatActivated){
+                controller.getPlayerController().cheatLvl();
+            }
+        } else if (keycode == Input.Keys.G) {
+            if(!cheatActivated){
+                controller.handleLevelUpOption(LevelUpType.DAMAGE);
+            }
         }
         return false;
     }
@@ -179,6 +205,14 @@ public class GameView implements Screen, InputProcessor {
         if (keycode == Input.Keys.SPACE) {
             controller.setAiming(false);
             return true;
+        } else if (
+            keycode == Input.Keys.H
+            || keycode == Input.Keys.B
+            || keycode == Input.Keys.T
+            || keycode == Input.Keys.Y
+            || keycode == Input.Keys.G
+        ) {
+            cheatActivated = false;
         }
         return false;
     }

@@ -166,4 +166,13 @@ public class PlayerController {
     public boolean playerIsDead(){
         return player.getPlayerHealth() <= 0;
     }
+
+
+    public void cheatHealth(){
+        player.setPlayerHealth(player.getPlayerHealth()+1);
+    }
+    public void cheatLvl(){
+        player.setLvl(player.getLvl() + 1);
+        App.getCurrentGame().setLvlingUp(true);
+    }
 }
