@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.TwentyMinUtesTillDown.Controllers.LoginMenuController;
 import io.github.TwentyMinUtesTillDown.Controllers.PreGameMenuController;
@@ -32,6 +29,10 @@ public class LoginMenuView implements Screen {
     private BitmapFont text;
     private String errorMessage = null;
     private TextField newPasswordField;
+
+    private TextField securityAnswerField;
+    private CheckBox securityQuestion;
+
     private boolean forgetPassClickedLastFrame = false;
     private boolean loginClickedLastFrame = false;
 
@@ -51,6 +52,8 @@ public class LoginMenuView implements Screen {
         text.getData().setScale(2,2);
         newPasswordField = new TextField("new password",skin);
         newPasswordField.setVisible(false);
+        securityAnswerField = new TextField("what is your favorite animal?",skin);
+        securityQuestion = new CheckBox("use security question",skin);
     }
 
     @Override
@@ -68,10 +71,14 @@ public class LoginMenuView implements Screen {
         tableText.add(passwordField).width(500);
         tableText.row().pad(30,0,0,0);
         tableText.add(newPasswordField).width(500);
+        tableText.row().pad(30,0,0,0);
+        tableText.add(securityAnswerField).width(500);
 
         tableButtons.add(login).width(200).height(80).padBottom(10);
         tableButtons.row().pad(10,0,10,0);
         tableButtons.add(forgetPass).width(600).height(80).padBottom(10);
+        tableButtons.row().pad(10,0,10,0);
+        tableButtons.add(securityQuestion);
         tableButtons.row().pad(10,0,10,0);
         tableButtons.add(signUp).width(350).height(80);
         tableButtons.bottom();
@@ -80,6 +87,8 @@ public class LoginMenuView implements Screen {
         stage.addActor(tableText);
         stage.addActor(tableButtons);
         errorMessage = null;
+        securityQuestion.setVisible(false);
+        securityAnswerField.setVisible(false);
     }
 
     @Override
@@ -116,11 +125,15 @@ public class LoginMenuView implements Screen {
                     passwordField.setText("email");
                     login.setText("confirm");
                     forgetPass.setText("try again");
+                    securityAnswerField.setVisible(true);
+                    securityQuestion.setVisible(true);
                 } else {
                     newPasswordField.setVisible(false);
                     passwordField.setText("Password");
                     login.setText("Login");
                     forgetPass.setText("Forgot your password?");
+                    securityAnswerField.setVisible(false);
+                    securityQuestion.setVisible(false);
                 }
             }
         }
@@ -198,5 +211,13 @@ public class LoginMenuView implements Screen {
 
     public TextField getNewPasswordField() {
         return newPasswordField;
+    }
+
+    public TextField getSecurityAnswerField() {
+        return securityAnswerField;
+    }
+
+    public CheckBox getSecurityQuestion() {
+        return securityQuestion;
     }
 }

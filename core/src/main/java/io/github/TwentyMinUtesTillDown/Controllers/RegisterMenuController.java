@@ -1,5 +1,7 @@
 package io.github.TwentyMinUtesTillDown.Controllers;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.Enums.RegisterMenuCommands;
 import io.github.TwentyMinUtesTillDown.Models.Result;
@@ -13,6 +15,12 @@ public class RegisterMenuController {
 
     public void setView(RegisterMenuView view) {
         this.view = view;
+        view.getSecurityQuestion().addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                view.getSecurityQuestion().setText(null);
+            }
+        });
     }
     public Result register(){
         if(view.getRegister().isPressed()){
@@ -43,6 +51,9 @@ public class RegisterMenuController {
             User user = new User(username , password , email);
             App.addUserToUserList(user);
             App.setCurrentUserId(user.getId());
+            if(view.getImplementSecureQuestion().isChecked()){
+                user.setSecurityQuestion(view.getSecurityQuestion().getText());
+            }
             return new Result(true , "successfully added user");
         }else {
             return null;

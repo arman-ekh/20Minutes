@@ -18,6 +18,8 @@ import io.github.TwentyMinUtesTillDown.Controllers.PreGameMenuController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
+import io.github.TwentyMinUtesTillDown.Models.Enums.TextLanguage;
 import io.github.TwentyMinUtesTillDown.Models.User;
 
 public class PreGameMenuView implements Screen {
@@ -49,8 +51,21 @@ public class PreGameMenuView implements Screen {
         table.setFillParent(true);
         table.center();
         table.top().padTop(50);
+        String[] labels;
+        if(App.getLanguage().equals(Language.English)){
+            labels = new String[]{"load game", "new game", "Score Board", "hint menu", "profile", "setting", "logout"};
+        }else {
+            labels = new String[]{
+                TextLanguage.loadGame.getFingilish(),
+                TextLanguage.newGame.getFingilish(),
+                TextLanguage.scoreBoard.getFingilish(),
+                TextLanguage.hintMenu.getFingilish(),
+                TextLanguage.profile.getFingilish(),
+                TextLanguage.setting.getFingilish(),
+                TextLanguage.logout.getFingilish()
+            };
+        }
 
-        String[] labels = {"load game", "new game", "Score Board", "hint menu", "profile","setting", "logout"};
 
         for (int i = 0; i < labels.length; i++) {
             final int pageIndex = i;

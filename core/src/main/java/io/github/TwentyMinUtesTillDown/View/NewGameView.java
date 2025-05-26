@@ -16,9 +16,12 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import io.github.TwentyMinUtesTillDown.Controllers.GameController;
 import io.github.TwentyMinUtesTillDown.Controllers.NewGameController;
 import io.github.TwentyMinUtesTillDown.Main;
+import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 import io.github.TwentyMinUtesTillDown.Models.Enums.GunType;
 import io.github.TwentyMinUtesTillDown.Models.Enums.HeroType;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
+import io.github.TwentyMinUtesTillDown.Models.Enums.TextLanguage;
 
 public class NewGameView implements Screen {
     private Stage stage;
@@ -115,9 +118,13 @@ public class NewGameView implements Screen {
             gunsGroup.addActor(singleGun);
             index++;
         }
+        Label timeLabel;
+        if(App.getLanguage().equals(Language.English)){
+            timeLabel = new Label("Game Duration (minutes):", skin);
+        }else {
+            timeLabel = new Label(TextLanguage.gameDuration.getFingilish(), skin);
+        }
 
-
-        Label timeLabel = new Label("Game Duration (minutes):", skin);
         timeSelectBox = new SelectBox<>(skin);
         timeSelectBox.setItems(2, 10, 15, 20);
         timeSelectBox.setSelected(20);

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.*;
 
 import java.lang.reflect.Type;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 public class App {
     private static int currentUserId;
+    private static Language language = Language.English;
     private static int currentGameId;
     private static List<User> userList = new ArrayList<>();
     private static List<Game> gameList = new ArrayList<>();
@@ -216,4 +218,11 @@ public class App {
         }
     }
 
+    public static Language getLanguage() {
+        return language;
+    }
+
+    public static void setLanguage(Language language) {
+        App.language = language;
+    }
 }

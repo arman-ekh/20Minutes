@@ -16,6 +16,8 @@ import io.github.TwentyMinUtesTillDown.Controllers.PreGameMenuController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
+import io.github.TwentyMinUtesTillDown.Models.Enums.TextLanguage;
 import io.github.TwentyMinUtesTillDown.Models.KeyBindings;
 
 import java.util.ArrayList;
@@ -144,12 +146,26 @@ public class HintMenuView implements Screen {
         String description = "";
         switch (visibleBox.getName()) {
             case "Hero Hints":
-                description = "so you want to know your hero better";
-                setCurrentLines(
-                    "Diamond is the toughest material in the world\nbut speed was never her strength.(hp:7 speed:1)\n",
-                    "Dasher moves as swiftly as a deer,\ngraceful and quick(hp:2 speed:10).",
-                    "Shana is known far and wide for her\nunwavering reliability(hp:4 speed:4)."
-                );
+                if(App.getLanguage().equals(Language.English)){
+                    description = "so you want to know your hero better";
+                }else {
+                    description = TextLanguage.heroDescription.getFingilish();
+                }
+
+                if(App.getLanguage().equals(Language.English)){
+                    setCurrentLines(
+                        "Diamond is the toughest material in the world\nbut speed was never her strength.(hp:7 speed:1)\n",
+                        "Dasher moves as swiftly as a deer,\ngraceful and quick(hp:2 speed:10).",
+                        "Shana is known far and wide for her\nunwavering reliability(hp:4 speed:4)."
+                    );
+                }else {
+                    setCurrentLines(
+                        TextLanguage.diamondHint.getFingilish(),
+                        TextLanguage.dasherHint.getFingilish(),
+                        TextLanguage.shanaHint.getFingilish()
+                    );
+                }
+
 
                 break;
             case "Game Keys Display":
@@ -177,13 +193,24 @@ public class HintMenuView implements Screen {
                 );
                 break;
             case "Ability Information":
-                setCurrentLines(
-                    "Health Perk increases your maximum health by 1,\nallowing you to survive longer in battle",
-                    "Damage Perk doubles your attack power for 10 seconds,\nmaking every hit count",
-                    "Speed Perk boosts your movement speed by 2× for 10 seconds,\nletting you dodge and dash with ease.",
-                    "Projectile Perk adds one extra projectile to your attacks,\nincreasing your firepower.",
-                    "Max Capacity Perk expands your weapon's ammo capacity by 5,\ngiving you more shots before reloading."
-                );
+                if(App.getLanguage().equals(Language.English)){
+                    setCurrentLines(
+                        "Health Perk increases your maximum health by 1,\nallowing you to survive longer in battle",
+                        "Damage Perk doubles your attack power for 10 seconds,\nmaking every hit count",
+                        "Speed Perk boosts your movement speed by 2× for 10 seconds,\nletting you dodge and dash with ease.",
+                        "Projectile Perk adds one extra projectile to your attacks,\nincreasing your firepower.",
+                        "Max Capacity Perk expands your weapon's ammo capacity by 5,\ngiving you more shots before reloading."
+                    );
+                }else {
+                    setCurrentLines(
+                        TextLanguage.healthPerkDescription.getFingilish(),
+                        TextLanguage.damagePerkDescription.getFingilish(),
+                        TextLanguage.speedPerkDescription.getFingilish() ,
+                        TextLanguage.projectilePerkDescription.getFingilish(),
+                        TextLanguage.maxAmmoPerkDescription.getFingilish()
+                    );
+                }
+
                 description = "Display information about game abilities";
                 break;
         }

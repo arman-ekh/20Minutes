@@ -11,6 +11,7 @@ public class User {
     private int totalTimeSurvived;
     private int totalKillCount;
     private String portraitAddress;
+    private String securityQuestion;
 
     public User(String name, String password, String email) {
         this.name = name;
@@ -21,6 +22,7 @@ public class User {
         this.totalTimeSurvived = 0;
         this.totalKillCount = 0;
         portraitAddress = getRandomProfile();
+        this.securityQuestion = null;
     }
 
     public String getPortraitAddress() {
@@ -121,5 +123,13 @@ public class User {
             }
         }
         return profile;
+    }
+
+    public String getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public void setSecurityQuestion(String securityQuestion) {
+        this.securityQuestion = securityQuestion;
     }
 }

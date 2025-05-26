@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.TwentyMinUtesTillDown.Controllers.MainMenuController;
 import io.github.TwentyMinUtesTillDown.Controllers.PreGameMenuController;
@@ -27,12 +24,13 @@ public class RegisterMenuView implements Screen {
     private TextField userNameField;
     private TextField emailField;
     private TextField passwordField;
+    private TextField securityQuestion;
     private Skin skin = AssetManager.getSkin();
     private TextButton register;
     private TextButton goBack;
     private BitmapFont text;
     private String errorMessage = null;
-
+    private CheckBox implementSecureQuestion;
 
     public RegisterMenuView(RegisterMenuController controller) {
         this.controller = controller;
@@ -42,6 +40,8 @@ public class RegisterMenuView implements Screen {
         this.emailField = new TextField("email" , skin);
         this.register = new TextButton("register", skin);
         this.goBack = new TextButton("main menu" , skin);
+        this.securityQuestion = new TextField("what is your favorite food?",skin);
+        this.implementSecureQuestion = new CheckBox("security question",skin);
     }
 
     @Override
@@ -59,13 +59,17 @@ public class RegisterMenuView implements Screen {
         tableField.row().pad(20,0,20,0);
         tableField.add(emailField).width(600);
         tableField.row().pad(20,0,20,0);
+        tableField.add(securityQuestion).width(600);
+        tableField.row().pad(20,0,20,0);
         tableField.center();
 
         tableButton.setFillParent(true);
-        tableButton.add(register);
-        tableButton.add(goBack);
+        tableButton.add(register).pad(10);
+        tableButton.add(goBack).pad(10);
+        tableButton.add(implementSecureQuestion).pad(10);
         tableButton.bottom();
         tableButton.pad(0,0,100,0);
+
 
         stage.addActor(tableButton);
         stage.addActor(tableField);
@@ -148,5 +152,13 @@ public class RegisterMenuView implements Screen {
 
     public TextButton getGoBack() {
         return goBack;
+    }
+
+    public TextField getSecurityQuestion() {
+        return securityQuestion;
+    }
+
+    public CheckBox getImplementSecureQuestion() {
+        return implementSecureQuestion;
     }
 }

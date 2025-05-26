@@ -16,6 +16,8 @@ import io.github.TwentyMinUtesTillDown.Controllers.PauseController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
+import io.github.TwentyMinUtesTillDown.Models.Enums.TextLanguage;
 import io.github.TwentyMinUtesTillDown.Models.GameModels.Hero;
 import io.github.TwentyMinUtesTillDown.Models.KeyBindings;
 
@@ -40,10 +42,18 @@ public class PauseView implements Screen {
     public PauseView(PauseController controller) {
         this.controller = controller;
         stage = new Stage();
-        resume = new TextButton("Resume",skin);
-        giveUp = new TextButton("Give up",skin);
-        saveAndExit = new TextButton("Save and Exit",skin);
-        grayGame = new CheckBox("grey",skin);
+        if(App.getLanguage().equals(Language.English)){
+            resume = new TextButton("Resume",skin);
+            giveUp = new TextButton("Give up",skin);
+            saveAndExit = new TextButton("Save and Exit",skin);
+            grayGame = new CheckBox("grey",skin);
+        }else {
+            resume = new TextButton(TextLanguage.resume.getFingilish(), skin);
+            giveUp = new TextButton(TextLanguage.giveUp.getFingilish(), skin);
+            saveAndExit = new TextButton(TextLanguage.save.getFingilish(), skin);
+            grayGame = new CheckBox( TextLanguage.grey.getFingilish(), skin);
+        }
+
         heart = AssetManager.getHeartLvlUp_tex();
         speed = AssetManager.getSpeedLvlUp_tex();
         projectile = AssetManager.getProjectileLvlUp_tex();
@@ -115,15 +125,16 @@ public class PauseView implements Screen {
         float lineHeight = 40;
 
         KeyBindings keys = App.keyBindings;
-        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatTime()) + ": Fast Forward Time", textX, textY);
+        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatTime()) + ": " + getText(TextLanguage.cheatFastForward), textX, textY);
         textY -= lineHeight;
-        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatHealth()) + ": Full Health", textX, textY);
+        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatHealth()) + ": " + getText(TextLanguage.cheatFullHealth), textX, textY);
         textY -= lineHeight;
-        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatBossFight()) + ": Boss Fight", textX, textY);
+        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatBossFight()) + ": " + getText(TextLanguage.cheatBossFight), textX, textY);
         textY -= lineHeight;
-        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatLvl()) + ": Level Up", textX, textY);
+        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatLvl()) + ": " + getText(TextLanguage.cheatLevelUp), textX, textY);
         textY -= lineHeight;
-        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatDamage()) + ": Max Damage", textX, textY);
+        font.draw(Main.getBatch(), Input.Keys.toString(keys.getCheatDamage()) + ": " + getText(TextLanguage.cheatMaxDamage), textX, textY);
+
 
         font.getData().setScale(originalScaleX, originalScaleY);
 
@@ -183,4 +194,8 @@ public class PauseView implements Screen {
     public CheckBox getGrayGame() {
         return grayGame;
     }
+    public static String getText(TextLanguage text) {
+        return App.getLanguage() == Language.English ? text.getEnglish() : text.getFingilish();
+    }
+
 }

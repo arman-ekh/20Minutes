@@ -49,9 +49,21 @@ public class LoginMenuController {
             String username = view.getUserNameField().getText();
             String email = view.getPasswordField().getText();
             String newPassword = view.getNewPasswordField().getText();
+            boolean securityQuestion = false;
+
             User user = App.getUserByUsername(username);
             if(user ==null){
                 return new Result(false ,"user with this user name dose not exist");
+            }
+            String securityAns = "-1";
+            if(view.getSecurityQuestion().isChecked()){
+                securityAns = view.getSecurityAnswerField().getText();
+                securityQuestion = true;
+            }
+            if(user.getSecurityQuestion() != null){
+                if(user.getSecurityQuestion().equals(securityAns)){
+                    return new Result(false , "your password is: "+user.getPassword());
+                }
             }
             if(!user.getEmail().equals(email)){
                 return new Result(false , "email is wrong");

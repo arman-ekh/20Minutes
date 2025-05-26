@@ -16,6 +16,8 @@ import io.github.TwentyMinUtesTillDown.Controllers.RegisterMenuController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
+import io.github.TwentyMinUtesTillDown.Models.Enums.TextLanguage;
 import io.github.TwentyMinUtesTillDown.Models.Result;
 import io.github.TwentyMinUtesTillDown.Models.User;
 
@@ -28,14 +30,65 @@ public class MainMenuView implements Screen {
     private Table table;
     private final Skin skin = AssetManager.getSkin();
     private final MainMenuController controller;
+    private final CheckBox englishCheckbox;
+    private final CheckBox fingilishCheckbox;
+
 
     public MainMenuView(MainMenuController controller) {
         this.controller = controller;
         this.stage = new Stage();
-        this.textButtonGuest = new TextButton("play as guest", skin);
-        this.label = new Label("20 minutes till dawn", skin);
-        this.loginButton = new TextButton("Login",skin);
-        this.registerButton = new TextButton("Register",skin);
+        if(App.getLanguage().equals(Language.Finglish)){
+            this.textButtonGuest = new TextButton(TextLanguage.playAsGuest.getFingilish(), skin);
+            this.label = new Label("20 minutes till dawn", skin);
+            this.loginButton = new TextButton(TextLanguage.login.getFingilish(), skin);
+            this.registerButton = new TextButton(TextLanguage.register.getFingilish(), skin);
+        }else {
+            this.textButtonGuest = new TextButton("play as guest", skin);
+            this.label = new Label("20 minutes till dawn", skin);
+            this.loginButton = new TextButton("Login",skin);
+            this.registerButton = new TextButton("Register",skin);
+        }
+
+
+        this.englishCheckbox = new CheckBox("English", skin);
+        this.fingilishCheckbox = new CheckBox("Fingilish", skin);
+
+        if (App.getLanguage() == Language.English) {
+            englishCheckbox.setChecked(true);
+            fingilishCheckbox.setChecked(false);
+        } else {
+            englishCheckbox.setChecked(false);
+            fingilishCheckbox.setChecked(true);
+        }
+
+
+
+        englishCheckbox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (englishCheckbox.isChecked()) {
+                    fingilishCheckbox.setChecked(false);
+                    App.setLanguage(Language.English);
+                    Main.getMain().setScreen(new MainMenuView(new MainMenuController())); // Refresh
+                } else {
+                    englishCheckbox.setChecked(true);
+                }
+            }
+        });
+
+        fingilishCheckbox.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (fingilishCheckbox.isChecked()) {
+                    englishCheckbox.setChecked(false);
+                    App.setLanguage(Language.Finglish);
+                    Main.getMain().setScreen(new MainMenuView(new MainMenuController()));
+                } else {
+                    fingilishCheckbox.setChecked(true);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -52,6 +105,11 @@ public class MainMenuView implements Screen {
         table.row().pad(10, 0, 10, 0);
         table.add(registerButton);
         table.row().pad(10, 0, 10, 0);
+        table.row().pad(10, 0, 10, 0);
+        table.add(englishCheckbox).pad(20);
+        table.row();
+        table.add(fingilishCheckbox);
+
         stage.addActor(table);
         App.playMusic();
     }

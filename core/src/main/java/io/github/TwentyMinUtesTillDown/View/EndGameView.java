@@ -14,6 +14,8 @@ import io.github.TwentyMinUtesTillDown.Controllers.EndGameController;
 import io.github.TwentyMinUtesTillDown.Main;
 import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
+import io.github.TwentyMinUtesTillDown.Models.Enums.Language;
+import io.github.TwentyMinUtesTillDown.Models.Enums.TextLanguage;
 
 public class EndGameView implements Screen {
     private EndGameController controller;
@@ -40,7 +42,12 @@ public class EndGameView implements Screen {
         table = new Table();
         table.setFillParent(true);
         table.bottom().padBottom(100);
-        textButton = new TextButton("Go Back",skin);
+        if(App.getLanguage().equals(Language.Finglish)){
+            textButton = new TextButton(TextLanguage.goBack.getFingilish(), skin);
+        }else {
+            textButton = new TextButton(TextLanguage.goBack.getEnglish(), skin);
+        }
+
         table.add(textButton);
         stage.addActor(table);
     }
