@@ -67,6 +67,7 @@ public class PreGameMenuView implements Screen {
         }
 
         stage.addActor(table);
+        controller.setView(this);
     }
 
 
@@ -84,7 +85,6 @@ public class PreGameMenuView implements Screen {
         }
         Main.getBatch().end();
 
-        controller.setView(this);
     }
 
     @Override

@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.github.TwentyMinUtesTillDown.Controllers.SettingMenuController;
 import io.github.TwentyMinUtesTillDown.Main;
+import io.github.TwentyMinUtesTillDown.Models.App;
 import io.github.TwentyMinUtesTillDown.Models.AssetManager;
 
 public class SettingMenuView implements Screen {
@@ -22,13 +20,19 @@ public class SettingMenuView implements Screen {
     private Skin skin = AssetManager.getSkin();
     private Table table;
     private TextButton goBack ;
-
+    private CheckBox grayGame;
+    private CheckBox autoReload;
+    private CheckBox sfx;
+    private TextButton changeKeyBinds;
 
     public SettingMenuView(SettingMenuController controller) {
         this.controller = controller;
         stage = new Stage();
-        controller.setView(this);
         goBack = new TextButton("Go Back",skin);
+        grayGame = new CheckBox("grey",skin);
+        autoReload = new CheckBox("Auto Reload",skin);
+        sfx = new CheckBox("sound effect",skin);
+        changeKeyBinds = new TextButton("change keybinds",skin);
     }
 
     @Override
@@ -54,13 +58,25 @@ public class SettingMenuView implements Screen {
             }
         });
 
+
         table.add(volumeSlider).width(300).pad(20);
         table.row();
         table.add(changeSongButton).pad(20);
         table.row();
+        table.add(grayGame).padBottom(20);
+        grayGame.setChecked(App.isGreyGame());
+        table.add(autoReload).pad(20);
+        autoReload.setChecked(App.isAutoReload());
+        table.add(sfx).pad(20);
+        sfx.setChecked(App.isSfxEnabled());
+        table.row();
+        table.add(changeKeyBinds).width(400).padBottom(20);
+        table.row();
         table.add(goBack).pad(20);
 
+
         stage.addActor(table);
+        controller.setView(this);
     }
 
     @Override
@@ -98,5 +114,20 @@ public class SettingMenuView implements Screen {
     @Override
     public void dispose() {
 
+    }
+    public CheckBox getGrayGame() {
+        return grayGame;
+    }
+
+    public CheckBox getAutoReload() {
+        return autoReload;
+    }
+
+    public CheckBox getSfx() {
+        return sfx;
+    }
+
+    public TextButton getChangeKeyBinds() {
+        return changeKeyBinds;
     }
 }
